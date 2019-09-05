@@ -3,11 +3,11 @@ WORKDIR /go/src/golang_chat
 COPY . .
 ENV GO111MODULE=on
 
-# RUN apk add --no-cache \
-RUN apk add \
+RUN apk add --no-cache \
     alpine-sdk \
     git \
     && go get github.com/pilu/fresh
 
-CMD ["fresh"]
+CMD ["fresh", "-c", "./fresh.conf"]
+
 
