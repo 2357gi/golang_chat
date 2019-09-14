@@ -1,4 +1,4 @@
-module github.com/2357gi/golang_chat
+module golang_chat
 
 go 1.12
 
