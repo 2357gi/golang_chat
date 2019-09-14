@@ -1,4 +1,4 @@
-package golang_chat
+package main
 
 import (
 	"log"
@@ -23,9 +23,14 @@ func main() {
 	fs := http.FileServer(http.Dir("./public"))
 	http.Handle("/", fs)
 	log.Println("http server started on :8080")
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", Log(http.DefaultServeMux))
+
+
+	http.HandleFunc("/ws", handleConnections)
+	go handleMessages()
+
 	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		log.Fatal("ListenAndServe: ", Log(http.DefaultServeMux))
 	}
 }
 
@@ -53,7 +58,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func handleMessage() {
+func handleMessages() {
 	for {
 		msg := <-broadcast
 

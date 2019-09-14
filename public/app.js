@@ -10,13 +10,13 @@ new Vue({
 
     },
 
-    created: function () {
+    created: function() {
         var self = this;
-        this.ws = new websocket('ws://'+ window.location.host + '/ws');
+        this.ws = new WebSocket('ws://'+ window.location.host + '/ws');
         this.ws.addEventListener('message', function (e) {
             var msg = JSON.parse(e.data);
             self.chatContent += '<div class="chip"'
-                    + '<img src="' + self.gravaterURL(msg.email) +'">' // avater
+                    + '<img src="' + self.gravatarURL(msg.email) +'">' // avater
                     + msg.username
                 + '</div>'
                 + emojione.toImage(msg.message) + '</br>'; // parse Emoji
@@ -26,9 +26,9 @@ new Vue({
         });
     },
 
-    method: {
+    methods: {
         send: function () {
-            if (this.message != '') {
+            if (this.newMsg != '') {
                 this.ws.send(
                     JSON.stringify({
                         email: this.email,
@@ -42,12 +42,12 @@ new Vue({
         },
         join: function () {
             if(!this.email) {
-                Materialize.toact('you mast enter an email', 2000);
+                Materialize.toast('you mast enter an email', 2000);
                 return
             }
 
             if(!this.username) {
-                Materialize.toact('you mast enter a username', 2000);
+                Materialize.toast('you mast enter a username', 2000);
                 return
             }
 
@@ -55,7 +55,7 @@ new Vue({
             this.username = $('<p>').html(this.username).text();
             this.joined = true;
         },
-        gravaterURL: function (email) {
+        gravatarURL: function (email) {
             return 'http://www.gravatar.com/avatar/' + CryptoJS.MD5(email);
         }
     }
