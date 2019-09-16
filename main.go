@@ -25,7 +25,6 @@ func main() {
 	log.Println("http server started on :8080")
 	err := http.ListenAndServe(":8080", Log(http.DefaultServeMux))
 
-
 	http.HandleFunc("/ws", handleConnections)
 	go handleMessages()
 
