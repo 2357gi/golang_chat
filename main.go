@@ -22,11 +22,12 @@ type Message struct {
 func main() {
 	fs := http.FileServer(http.Dir("./public"))
 	http.Handle("/", fs)
-	log.Println("http server started on :8080")
-	err := http.ListenAndServe(":8080", Log(http.DefaultServeMux))
 
 	http.HandleFunc("/ws", handleConnections)
 	go handleMessages()
+
+	log.Println("http server started on :8080")
+	err := http.ListenAndServe(":8080", Log(http.DefaultServeMux))
 
 	if err != nil {
 		log.Fatal("ListenAndServe: ", Log(http.DefaultServeMux))

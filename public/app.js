@@ -4,8 +4,8 @@ new Vue({
         ws: null,
         newMsg: '',
         chatContent: '',
-        email: '',
-        username: '',
+        email: null,
+        username: null,
         joined: false
 
     },
